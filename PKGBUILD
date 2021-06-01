@@ -13,7 +13,7 @@ license=('GPL')
 depends=('python' 'qt5-x11extras' 'qt5-websockets' 'qt5-webengine' 'mpv' 'qtermwidget')
 makedepends=('git')
 source=(
-	"git+https://github.com/sinofine/moonplayer#branch=master"
+	"git+https://github.com/sinofine/moonplayer#branch=develop"
 	)
 provides=('moonplayer')
 conflicts=('moonplayer')
