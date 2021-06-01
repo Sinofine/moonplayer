@@ -2,46 +2,40 @@
 # contributer: a304yuanyuan at gmail.com
 # contributer: rob.til.freedman@googlemail.com
 
-pkgname=moonplayer-git-bilibili-modified
-_pkgname=moonplayer
-pkgver=2.7.r467
+pkgname=moonplayer-bili
+pkgver=3.8
 pkgrel=1
 pkgdesc="A qt font-end for mplayer with the abilities of watching and downloading videos from chinese network"
 arch=('i686' 'x86_64')
 url="https://github.com/coslyk/moonplayer"
 license=('GPL')
-depends=('python' 'qt5-x11extras' 'qt5-websockets' 'qt5-webengine' 'mpv' 'qtermwidget')
-makedepends=('git')
-source=(
-	"git+https://github.com/sinofine/moonplayer#branch=develop"
-	)
-provides=('moonplayer')
 conflicts=('moonplayer')
+depends=('python' 'qt5-x11extras' 'qt5-base' 'qt5-declarative' 'mpv')
+makedepends=('cmake' 'git' 'qt5-tools')
+source=(
+	git+https://github.com/sinofine/moonplayer.git#develop
+	)
 sha1sums=('SKIP')
 
-pkgver(){
-	cd $srcdir/$_pkgname
-	echo $(grep "Latest version" README.md | awk '{ print $3 }' | sed 's/^v//g')."r$(git rev-list --count HEAD)"
+prepare() {
+  cd $srcdir/$pkgname
+  git submodule update --init --recursive
 }
 
 build() {
-	cd $srcdir/$_pkgname/src
-#
-	find . -name '*.py' -exec sed -i \
-	's|#![ ]*/usr/bin/python$|&2|;s|#![ ]*/usr/bin/env python$|&2|' {} +
+	cd $srcdir/$pkgname
+  mkdir build
+  cd build
 
-	qmake-qt5 PREFIX=/usr moonplayer.pro
+  cmake .. -DCMAKE_INSTALL_PREFIX=/usr
 
 	make
 }
 
 package() {
-	cd $srcdir/$_pkgname/src
+	cd $srcdir/$pkgname/build
 
-	make INSTALL_ROOT=$pkgdir install
-
-	#clean pyc
-#	rm $pkgdir/usr/share/moonplayer/plugins/*.pyc
+	make DESTDIR="${pkgdir}" install
 
 	cd $pkgdir/usr/share
 
