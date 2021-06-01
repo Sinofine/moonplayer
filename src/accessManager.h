@@ -42,6 +42,7 @@ public:
     QNetworkReply *post(const QNetworkRequest &request, const QByteArray &data);
 
     Q_INVOKABLE void setupProxy(ProxyType proxyType, const QString& proxy = QString(), bool proxyOnlyForParsing = false);
+    Q_INVOKABLE void setupCookie(const QString& cookie = QString(), bool cookieEnabled = false);
     
     inline void addUnseekableHost(const QString& host) { m_unseekableHosts << host; }
     inline bool urlIsUnseekable(const QUrl& url) { return m_unseekableHosts.contains(url.host()); }

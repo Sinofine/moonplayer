@@ -106,7 +106,7 @@ CURRENT_VERSION=$(get_current_version "ykdl")
 echo "Current version: $CURRENT_VERSION"
 
 # Get latest ykdl version
-LATEST_VERSION=$(get_latest_version_github "coslyk/moonplayer-plugins")
+LATEST_VERSION=$(get_latest_version_github "sinofine/moonplayer-plugins")
 if [ -n "$LATEST_VERSION" ]; then
     echo "Latest version: $LATEST_VERSION"
 else
@@ -121,13 +121,13 @@ else
     echo "\n---------------- Updating ykdl ---------------"
     echo "Downloading latest version..."
     rm -f ykdl-moonplayer
-    downloader ykdl-moonplayer "https://github.com/coslyk/moonplayer-plugins/releases/download/$LATEST_VERSION/ykdl-moonplayer"
+    downloader ykdl-moonplayer "https://github.com/sinofine/moonplayer-plugins/releases/download/$LATEST_VERSION/ykdl-moonplayer"
     chmod a+x ykdl-moonplayer
     save_version_info "ykdl" "$LATEST_VERSION"
     
     echo "\n-------------- Updating plugins --------------"
     echo "Downloading latest version..."
-    downloader plugins.zip "https://github.com/coslyk/moonplayer-plugins/releases/download/$LATEST_VERSION/plugins.zip"
+    downloader plugins.zip "https://github.com/sinofine/moonplayer-plugins/releases/download/$LATEST_VERSION/plugins.zip"
     unzip -o plugins.zip -d plugins
     rm -f plugins.zip
     echo "Finished. You need to restart MoonPlayer to load plugins."

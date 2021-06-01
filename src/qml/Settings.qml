@@ -84,6 +84,10 @@ CustomTabDialog {
             property alias forward_cache: forwardCacheSpinBox.value
             property alias backward_cache: backwardCacheSpinBox.value
             property alias proxy_type: proxyModeComboBox.currentIndex
+            property alias cookie: cookieInput.text
+            property alias cookie_enabled: cookieEnabledCheckBox.checked
+            onCookieChanged: accessManager.setupCookie(cookie, cookie_enabled)
+            onCookie_enabledChanged: accessManager.setupCookie(cookie, cookie_enabled)
             property alias proxy: proxyInput.text
             property alias proxy_only_for_parsing: proxyParsingOnlyCheckBox.checked
             onProxyChanged: accessManager.setupProxy(proxy_type, proxy, proxy_only_for_parsing)
@@ -227,6 +231,8 @@ CustomTabDialog {
         }
         
         // Network
+        ScrollView {
+        clip: true
         GridLayout {
             columns: 2
             rowSpacing: 2
@@ -272,6 +278,22 @@ CustomTabDialog {
                 text: qsTr("Use proxy only for parsing videos")
                 Layout.columnSpan: 2
             }
+            MenuSeparator {Layout.columnSpan: 2; Layout.fillWidth: true}
+
+            CheckBox{
+                id: cookieEnabledCheckBox
+                text: qsTr("Enable cookie")
+                Layout.columnSpan: 2
+            }
+
+            Label {text:qsTr("BiliCookie")}
+            TextField{
+                id: cookieInput
+                selectByMouse: true
+                Layout.minimumWidth: 200
+                enabled: cookieEnabledCheckBox.checked
+            }
+        }
         }
         
         // Downloader

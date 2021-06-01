@@ -76,6 +76,7 @@ void ParserYkdl::runParser(const QUrl &url)
     QSettings settings;
     NetworkAccessManager::ProxyType proxyType = (NetworkAccessManager::ProxyType) settings.value(QStringLiteral("network/proxy_type")).toInt();
     QString proxy = settings.value(QStringLiteral("network/proxy")).toString();
+    QString cookie = settings.value(QStringLiteral("network/cookie")).toString();
     
     QStringList args;
     args << QStringLiteral("--timeout") << QStringLiteral("15") << QStringLiteral("--user-agent") << QStringLiteral(DEFAULT_UA);
@@ -84,7 +85,8 @@ void ParserYkdl::runParser(const QUrl &url)
         args << QStringLiteral("--http-proxy") << proxy;
     else if (!proxy.isEmpty() && proxyType == NetworkAccessManager::SOCKS5_PROXY)
         args << QStringLiteral("--socks-proxy") << proxy;
-    
+    if (url.host() == QStringLiteral("www.bilibili.com")) 
+        args << QStringLiteral("--cookie") << cookie;
     args << url.toString();
     m_process.start(userResourcesPath() + QStringLiteral("/ykdl-moonplayer"), args, QProcess::ReadOnly);
 }

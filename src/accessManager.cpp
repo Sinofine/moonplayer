@@ -22,10 +22,14 @@
 class ProxyFactory : public QNetworkProxyFactory
 {
     QNetworkProxy m_proxy;
+    QString cookie;
 public:
     void setProxy(const QNetworkProxy& proxy)
     {
         m_proxy = proxy;
+    }
+    void setCookie(const QString& cstr){
+        cookie = cstr;
     }
     virtual QList<QNetworkProxy> queryProxy(const QNetworkProxyQuery &query)
     {
@@ -121,3 +125,7 @@ void NetworkAccessManager::setupProxy(NetworkAccessManager::ProxyType proxyType,
         qputenv("https_proxy", proxy_str);
     }
 }
+void NetworkAccessManager::setupCookie(const QString& cookie, bool cookieEnabled)
+{
+    if(cookieEnabled) m_proxyFactory->setCookie(cookie);
+};

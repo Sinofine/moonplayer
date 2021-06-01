@@ -80,7 +80,7 @@ Write-Output ""
 Write-Output "---------- Checking ykdl's updates ---------"
 
 # Get latest ykdl version
-$latest_version = Get-Latest-Version-Github "coslyk/moonplayer-plugins"
+$latest_version = Get-Latest-Version-Github "sinofine/moonplayer-plugins"
 Write-Output "Latest version: $latest_version"
 
 # Get current ykdl version
@@ -94,7 +94,7 @@ if ($latest_version -eq $current_version) {
     Write-Output ""
     Write-Output "------------ Updating ykdl -------------"
     Write-Output "Downloading latest version..."
-    $url = "https://github.com/coslyk/moonplayer-plugins/releases/download/$latest_version/ykdl-moonplayer.exe"
+    $url = "https://github.com/sinofine/moonplayer-plugins/releases/download/$latest_version/ykdl-moonplayer.exe"
     $output = "$env:LOCALAPPDATA\MoonPlayer\ykdl-moonplayer.exe"
     (New-Object System.Net.WebClient).DownloadFile($url, $output)
     Save-Version-Info "ykdl" $latest_version
@@ -102,7 +102,7 @@ if ($latest_version -eq $current_version) {
     Write-Output ""
     Write-Output "-------------- Updating plugins --------------"
     Write-Output "Downloading plugins..."
-    $url = "https://github.com/coslyk/moonplayer-plugins/releases/download/$latest_version/plugins.zip"
+    $url = "https://github.com/sinofine/moonplayer-plugins/releases/download/$latest_version/plugins.zip"
     $output = "$env:LOCALAPPDATA\MoonPlayer\plugins.zip"
     (New-Object System.Net.WebClient).DownloadFile($url, $output)
     Expand-Archive "$output" -DestinationPath "$env:LOCALAPPDATA\MoonPlayer\plugins" -Force
