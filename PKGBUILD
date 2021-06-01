@@ -13,17 +13,17 @@ conflicts=('moonplayer')
 depends=('python' 'qt5-x11extras' 'qt5-base' 'qt5-declarative' 'mpv')
 makedepends=('cmake' 'git' 'qt5-tools')
 source=(
-	git+https://github.com/sinofine/moonplayer.git#develop
+	git+https://github.com/sinofine/moonplayer.git#branch=develop
 	)
 sha1sums=('SKIP')
 
 prepare() {
-  cd $srcdir/$pkgname
+  cd $srcdir/moonplayer
   git submodule update --init --recursive
 }
 
 build() {
-	cd $srcdir/$pkgname
+	cd $srcdir/moonplayer
   mkdir build
   cd build
 
@@ -33,7 +33,7 @@ build() {
 }
 
 package() {
-	cd $srcdir/$pkgname/build
+	cd $srcdir/moonplayer/build
 
 	make DESTDIR="${pkgdir}" install
 
